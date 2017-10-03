@@ -1,6 +1,37 @@
 body{
-  background-color: lightgreen;
-  p{
-    color: blue;
+  background-color: lightblue;
+  font-family: sans-serif;
+}
+
+.table{
+  width: 400px;
+  border-collapse: collapse;
+}
+
+.table_tr{
+  background-color: #fff;
+
+  &:nth-child(odd){
+    background-color: #dbffdb;
+  }
+
+  &:last-child{
+    .table_td{
+      border: none;
+    }
+  }
+}
+
+.table_td{
+  border-bottom: 1px solid #333;
+  padding: 20px 0;
+
+  &:first-child{
+    font-weight: bold;
+    padding: 20px 10px;
+  }
+
+  &:nth-child(3){
+    text-align: center;
   }
 }

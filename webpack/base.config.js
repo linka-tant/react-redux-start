@@ -8,6 +8,7 @@ module.exports = {
 
   output: {
     path: path.join(process.cwd(), 'public/build'),
+    publicPath: '/build/',
     filename: 'bundle.js'
   },
 

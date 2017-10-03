@@ -8,6 +8,12 @@ module.exports = merge(baseConfig, {
     './src/styles/main.scss'
   ],
 
+  devServer: {
+    inline: true,
+    contentBase: 'public',
+    port: '3000',
+  },
+
   module: {
     rules: [
       {

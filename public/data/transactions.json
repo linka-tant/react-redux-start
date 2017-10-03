@@ -1,0 +1,17 @@
+[
+  {
+    "id" : 1,
+    "amount" : 1923,
+    "bankId" : "First bank"
+  },
+  {
+    "id" : 2,
+    "amount" : 200,
+    "bankId" : "Second bank"
+  },
+  {
+    "id" : 3,
+    "amount" : 672,
+    "bankId" : "Third bank"
+  }
+]
