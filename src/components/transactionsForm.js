@@ -46,6 +46,8 @@ class TransactionsForm extends Component {
       id: transactionsLength
     }
     dispatch(add_transaction(data));
+    alert('Transaction added.');
+    e.target.reset();
   }
 
   render(){
