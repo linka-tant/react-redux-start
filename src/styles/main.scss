@@ -1,11 +1,14 @@
 body{
   background-color: lightblue;
   font-family: sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
 .table{
   width: 400px;
   border-collapse: collapse;
+  margin-left: 40px;
 }
 
 .table_tr{
@@ -33,5 +36,87 @@ body{
 
   &:nth-child(3){
     text-align: center;
+  }
+}
+
+.header{
+  width: 100%;
+  background-color: #fff;
+  height: 60px;
+  position: relative;
+  margin-bottom: 40px;
+}
+
+.header_nav{
+  padding-top: 20px;
+  padding-left: 20px;
+}
+
+.header_nav-link{
+  padding: 0 20px;
+  color: #000;
+  text-decoration: none;
+
+  &.active,
+  &:hover{
+    color: #3bb540;
+  }
+}
+
+.header_logout{
+  position: absolute;
+  right: 40px;
+  top: 20px;
+  color: #000;
+  margin: 0;
+  cursor: pointer;
+
+  &:hover{
+    color: #3bb540;
+  }
+}
+
+.form{
+  margin-left: 40px;
+  width: 400px;
+}
+
+.form_label{
+  font-size: 14px;
+  display: block;
+  padding-bottom: 5px;
+}
+
+.form_block{
+  margin-bottom: 20px;
+}
+
+.form_select{
+  width: 100%;
+  height: 40px;
+  font-size: 15px;
+}
+
+.form_input{
+  width: 100%;
+  height: 40px;
+  box-sizing: border-box;
+  padding: 0 10px;
+  font-size: 15px;
+}
+
+.form_submit{
+  width: 200px;
+  height: 40px;
+  margin-top: 20px;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #fff;
+  font-size: 15px;
+
+  &:hover{
+    background-color: #3bb540;
   }
 }
