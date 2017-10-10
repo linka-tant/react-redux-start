@@ -5,6 +5,6 @@ import { banks } from './banks';
 
 
 export default combineReducers({
-    transactions,
-    banks
+  transactions,
+  banks
 });

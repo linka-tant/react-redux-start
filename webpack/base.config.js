@@ -40,6 +40,10 @@ module.exports = {
     ],
   },
 
+  resolve: {
+    modules: ['../src', '../node_modules']
+  },
+
   plugins: [
     new ExtractTextPlugin('bundle.css'),
   ]

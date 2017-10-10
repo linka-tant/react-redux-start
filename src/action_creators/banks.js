@@ -3,7 +3,7 @@ export const ERROR_RECIEVE_BANKS = "ERROR_RECIEVE_BANKS";
 
 export function fetch_banks() {
   return (dispatch) => {
-    return fetch(`http://${window.location.host}/data/bank_list.json`)
+    return fetch('/data/bank_list.json')
       .then(response => response.json())
       .then(json => {
         dispatch(receive_banks(json));

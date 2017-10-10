@@ -1,46 +1,40 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetch_transactions } from '../action_creators/transactions';
-import { fetch_banks } from '../action_creators/banks';
-import { checkData } from '../helpers';
+import { fetch_transactions } from 'action_creators/transactions';
+import { fetch_banks } from 'action_creators/banks';
+import { checkData } from 'helpers';
+import _ from 'lodash';
 
-import Navigation from './navigation';
 
 class TransactionsTable extends Component {
 
-  constructor(props){
-    super(props);
-  }
-
   componentDidMount() {
     const { dispatch } = this.props
-    checkData(this.props.banks, dispatch, fetch_banks);
     checkData(this.props.transactions, dispatch, fetch_transactions);
-
+    if(this.props.transactions.length){
+      checkData(this.props.banks, dispatch, fetch_banks);
+    }
   }
 
-  findBank(id){
-    if(this.props.banks.length){
-      const arr = this.props.banks.find((bank) => {
-        return bank.id == id;
-      });
-      return arr.title;
+  componentWillReceiveProps(newProps){
+    const { dispatch } = this.props
+    if(newProps.transactions.length && _.isEmpty(this.props.banks)){
+      checkData(this.props.banks, dispatch, fetch_banks);
     }
   }
 
   render(){
     return(
       <div>
-        <Navigation />
         <table className="table">
           <tbody>
-            {this.props.transactions && this.props.banks ? this.props.transactions.map((item) => (
-                  <tr key={item.id} className="table_tr">
-                    <td className="table_td">{item.id}</td>
-                    <td className="table_td">{this.findBank(item.bankId)}</td>
-                    <td className="table_td">{item.amount}</td>
-                  </tr>
-                )) : null}
+            {this.props.transactions.length && !(_.isEmpty(this.props.banks)) ? this.props.transactions.map((item) => (
+              <tr key={item.id} className="table_tr">
+                <td className="table_td">{item.id}</td>
+                <td className="table_td">{this.props.banks[item.bankId].title}</td>
+                <td className="table_td">{item.amount}</td>
+              </tr>
+            )) : null}
           </tbody>
         </table>
       </div>
@@ -49,10 +43,10 @@ class TransactionsTable extends Component {
 }
 
 const mapStateToProps = (store) => {
-    return {
-        transactions: store.transactions,
-        banks: store.banks
-    };
+  return {
+    transactions: store.transactions,
+    banks: store.banks
+  };
 };
 
 export default connect(mapStateToProps)(TransactionsTable);

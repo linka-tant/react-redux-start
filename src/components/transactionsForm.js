@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetch_banks } from '../action_creators/banks';
-import { fetch_transactions, add_transaction } from '../action_creators/transactions';
-import { checkData } from '../helpers';
+import { fetch_banks } from 'action_creators/banks';
+import { fetch_transactions, add_transaction } from 'action_creators/transactions';
+import { checkData } from 'helpers';
+import _ from 'lodash';
 
-
-import Navigation from './navigation';
 
 class TransactionsForm extends Component {
 
   constructor(props){
     super(props);
     this.state = {
-      bankId : 1
+      bankId : 0
     }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -25,9 +24,9 @@ class TransactionsForm extends Component {
   }
 
   componentWillReceiveProps(newProps){
-     if(!this.state.bankId){
-       if(newProps.banks[0]) this.setState({ bankId: newProps.banks[0].id });
-     }
+    if(!this.state.bankId){
+      if(newProps.banks[0]) this.setState({ bankId: newProps.banks[0].id });
+    }
   }
 
   handleChange(e){
@@ -53,13 +52,12 @@ class TransactionsForm extends Component {
   render(){
     return(
       <div>
-        <Navigation />
         <form className="form" onSubmit={this.handleSubmit}>
           <div className="form_block">
             <label className="form_label">List of banks</label>
             <select className="form_select" name="bankId" onChange={this.handleChange}>
-              {this.props.banks ? this.props.banks.map((item) => (
-                    <option value={item.id} key={item.id}>{item.title}</option>
+              {!_.isEmpty(this.props.banks) ? Object.keys(this.props.banks).map((key, index) => (
+                    <option value={key} key={key}>{this.props.banks[key].title}</option>
                   )) : null}
             </select>
           </div>
@@ -75,10 +73,10 @@ class TransactionsForm extends Component {
 }
 
 const mapStateToProps = (store) => {
-    return {
-        banks: store.banks,
-        transactions: store.transactions
-    };
+  return {
+    banks: store.banks,
+    transactions: store.transactions
+  };
 };
 
 export default connect(mapStateToProps)(TransactionsForm);

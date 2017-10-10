@@ -5,10 +5,12 @@ import { createStore, applyMiddleware } from 'redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import thunkMiddleware from 'redux-thunk';
 
-import reducer from './reducers/reducer';
+import reducer from 'reducers/reducer';
 
-import TransactionsTable from './components/transactionsTable';
-import TransactionsForm from './components/transactionsForm';
+import TransactionsTable from 'components/transactionsTable';
+import TransactionsForm from 'components/transactionsForm';
+import Navigation from 'components/navigation';
+
 
 const store = createStore( reducer, applyMiddleware(thunkMiddleware) );
 
@@ -16,10 +18,11 @@ ReactDOM.render(
   <Provider store={ store }>
     <BrowserRouter>
       <div className="main">
-          <Switch>
-            <Route path="/add" component={ TransactionsForm } />
-            <Route path="/" component={ TransactionsTable } />
-          </Switch>
+        <Navigation />
+        <Switch>
+          <Route path="/add" component={ TransactionsForm } />
+          <Route path="/" component={ TransactionsTable } />
+        </Switch>
       </div>
     </BrowserRouter>
   </Provider>
