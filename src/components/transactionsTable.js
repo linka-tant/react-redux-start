@@ -10,7 +10,7 @@ class TransactionsTable extends Component {
 
   componentDidMount() {
     const { dispatch } = this.props
-    checkData(this.props.transactions, dispatch, fetch_transactions);
+    dispatch(fetch_transactions());
     if(this.props.transactions.length){
       checkData(this.props.banks, dispatch, fetch_banks);
     }

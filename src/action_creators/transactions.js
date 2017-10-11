@@ -31,6 +31,7 @@ export const add_transaction = (data) => {
     const local = localStorage.getItem('transactions');
     transactions = JSON.parse(local);
   }
+  data["id"] = transactions.length + 1;
   transactions.push(data);
   localStorage.setItem("transactions", JSON.stringify(transactions));
   return {

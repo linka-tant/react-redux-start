@@ -11,8 +11,8 @@ class TransactionsForm extends Component {
   constructor(props){
     super(props);
     this.state = {
-      bankId : 0
-    }
+      bankId: 1
+    };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
@@ -20,13 +20,6 @@ class TransactionsForm extends Component {
   componentDidMount() {
     const { dispatch } = this.props
     checkData(this.props.banks, dispatch, fetch_banks);
-    checkData(this.props.transactions, dispatch, fetch_transactions);
-  }
-
-  componentWillReceiveProps(newProps){
-    if(!this.state.bankId){
-      if(newProps.banks[0]) this.setState({ bankId: newProps.banks[0].id });
-    }
   }
 
   handleChange(e){
@@ -38,11 +31,9 @@ class TransactionsForm extends Component {
   handleSubmit(e){
     e.preventDefault();
     const { dispatch } = this.props
-    const transactionsLength = this.props.transactions.length ? this.props.transactions.length + 1 : 1
     const data = {
       bankId: this.state.bankId,
       amount: this.state.amount,
-      id: transactionsLength
     }
     dispatch(add_transaction(data));
     alert('Transaction added.');
@@ -52,21 +43,22 @@ class TransactionsForm extends Component {
   render(){
     return(
       <div>
-        <form className="form" onSubmit={this.handleSubmit}>
-          <div className="form_block">
-            <label className="form_label">List of banks</label>
-            <select className="form_select" name="bankId" onChange={this.handleChange}>
-              {!_.isEmpty(this.props.banks) ? Object.keys(this.props.banks).map((key, index) => (
-                    <option value={key} key={key}>{this.props.banks[key].title}</option>
-                  )) : null}
-            </select>
-          </div>
-          <div className="form_block">
-            <label className="form_label" htmlFor="amount">Amount</label>
-            <input type="number" required className="form_input" id="amount" name="amount" onChange={this.handleChange} />
-          </div>
-          <button type="submit" className="form_submit">Submit</button>
-        </form>
+        {!_.isEmpty(this.props.banks) ?
+          <form className="form" onSubmit={this.handleSubmit}>
+            <div className="form_block">
+              <label className="form_label">List of banks</label>
+              <select className="form_select" name="bankId" onChange={this.handleChange}>
+                { Object.keys(this.props.banks).map((key, index) => (
+                  <option value={key} key={key}>{this.props.banks[key].title}</option>
+                ))}
+              </select>
+            </div>
+            <div className="form_block">
+              <label className="form_label" htmlFor="amount">Amount</label>
+              <input type="number" required className="form_input" id="amount" name="amount" onChange={this.handleChange} />
+            </div>
+            <button type="submit" className="form_submit">Submit</button>
+          </form>  : null}
       </div>
     )
   }
@@ -75,7 +67,6 @@ class TransactionsForm extends Component {
 const mapStateToProps = (store) => {
   return {
     banks: store.banks,
-    transactions: store.transactions
   };
 };
 
