@@ -3,22 +3,20 @@ import { connect } from 'react-redux';
 import { fetch_banks } from 'action_creators/banks';
 import { fetch_transactions, add_transaction } from 'action_creators/transactions';
 import { checkData } from 'helpers';
-import _ from 'lodash';
+import isEmpty from 'lodash.isempty';
 
 
 class TransactionsForm extends Component {
 
   constructor(props){
     super(props);
+    const { dispatch } = this.props;
+
     this.state = {
       bankId: 1
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
-  }
-
-  componentDidMount() {
-    const { dispatch } = this.props
     checkData(this.props.banks, dispatch, fetch_banks);
   }
 
@@ -43,7 +41,7 @@ class TransactionsForm extends Component {
   render(){
     return(
       <div>
-        {!_.isEmpty(this.props.banks) ?
+        {!isEmpty(this.props.banks) ?
           <form className="form" onSubmit={this.handleSubmit}>
             <div className="form_block">
               <label className="form_label">List of banks</label>
@@ -58,7 +56,7 @@ class TransactionsForm extends Component {
               <input type="number" required className="form_input" id="amount" name="amount" onChange={this.handleChange} />
             </div>
             <button type="submit" className="form_submit">Submit</button>
-          </form>  : null}
+          </form>  : "Loading..."}
       </div>
     )
   }

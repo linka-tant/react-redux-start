@@ -7,9 +7,9 @@ import thunkMiddleware from 'redux-thunk';
 
 import reducer from 'reducers/reducer';
 
+import TransactionsApp from 'components/transactionsApp';
 import TransactionsTable from 'components/transactionsTable';
 import TransactionsForm from 'components/transactionsForm';
-import Navigation from 'components/navigation';
 
 
 const store = createStore( reducer, applyMiddleware(thunkMiddleware) );
@@ -17,13 +17,12 @@ const store = createStore( reducer, applyMiddleware(thunkMiddleware) );
 ReactDOM.render(
   <Provider store={ store }>
     <BrowserRouter>
-      <div className="main">
-        <Navigation />
+      <TransactionsApp>
         <Switch>
+          <Route path="/" exact component={ TransactionsTable } />
           <Route path="/add" component={ TransactionsForm } />
-          <Route path="/" component={ TransactionsTable } />
         </Switch>
-      </div>
+      </TransactionsApp>
     </BrowserRouter>
   </Provider>
   , document.querySelector('#app'));

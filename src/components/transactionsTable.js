@@ -3,23 +3,27 @@ import { connect } from 'react-redux';
 import { fetch_transactions } from 'action_creators/transactions';
 import { fetch_banks } from 'action_creators/banks';
 import { checkData } from 'helpers';
-import _ from 'lodash';
+import isEmpty from 'lodash.isempty';
 
 
 class TransactionsTable extends Component {
 
-  componentDidMount() {
-    const { dispatch } = this.props
-    dispatch(fetch_transactions());
-    if(this.props.transactions.length){
-      checkData(this.props.banks, dispatch, fetch_banks);
+  constructor(props){
+    super(props);
+    this.state = {
+      note: "Loading..."
     }
   }
 
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch(fetch_transactions());
+    checkData(this.props.banks, dispatch, fetch_banks);
+  }
+
   componentWillReceiveProps(newProps){
-    const { dispatch } = this.props
-    if(newProps.transactions.length && _.isEmpty(this.props.banks)){
-      checkData(this.props.banks, dispatch, fetch_banks);
+    if(!newProps.transactions.length){
+      this.setState({note : "No transactions"});
     }
   }
 
@@ -28,13 +32,13 @@ class TransactionsTable extends Component {
       <div>
         <table className="table">
           <tbody>
-            {this.props.transactions.length && !(_.isEmpty(this.props.banks)) ? this.props.transactions.map((item) => (
+            {this.props.transactions.length && !(isEmpty(this.props.banks)) ? this.props.transactions.map((item, index) => (
               <tr key={item.id} className="table_tr">
-                <td className="table_td">{item.id}</td>
+                <td className="table_td">{index + 1}</td>
                 <td className="table_td">{this.props.banks[item.bankId].title}</td>
                 <td className="table_td">{item.amount}</td>
               </tr>
-            )) : null}
+            )) : <tr><td>{this.state.note}</td></tr>}
           </tbody>
         </table>
       </div>
